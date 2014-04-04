@@ -8,7 +8,7 @@ if (file_exists($saved_settings)) {
     require_once $saved_settings;
 }
 define('DEBUG_MODE', false);
-define('YF_PATH', '/var/www/yfix.net/yf/');
+define('YF_PATH', '/home/www/yf/');
 define('WEB_PATH', '//yfix.net/');
 define('SITE_DEFAULT_PAGE', './?object=home_page');
 define('SITE_ADVERT_NAME', 'Yfix.net');

@@ -1,1 +1,1 @@
-/var/www/yfix.net/yf/.dev/__TESTS/table2/table2_new_controls.class.php
+../../..//yf/.dev/tests/table2/table2_new_controls.class.php

@@ -1,1 +1,1 @@
-/var/www/yfix.net/yf/.dev/__TESTS/table2/table2_rotate.class.php
+../../../yf/.dev/tests/table2/table2_rotate.class.php
