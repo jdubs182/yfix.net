@@ -1,0 +1,1 @@
+wget "http://www.adminer.org/latest-mysql-en.php" -O adminer.php
