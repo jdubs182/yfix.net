@@ -1,1 +1,1 @@
-../../../yf/.dev/tests/form2/form2_sql_auto.class.php
+../../../yf/.dev/tests/form2/form2_auto_test.class.php
