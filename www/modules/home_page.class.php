@@ -3,7 +3,30 @@
 class home_page {
 
 	/***/
+	function view() {
+		$dir = dirname(PROJECT_PATH).'/docs/';
+		$doc = preg_replace('~[^a-z0-9_-]+~ims', '', $_GET['id']);
+		if ($doc) {
+			$f = $dir. $doc. '.stpl';
+			if (file_exists($f)) {
+				return tpl()->parse_string(file_get_contents($f), $replace, 'doc_'.$name);
+			}
+		}
+		return _e('Not found');
+	}
+
+	/***/
 	function show() {
+		$dir = dirname(PROJECT_PATH).'/docs/';
+		if ($_GET['id']) {
+			return $this->view();
+		}
+		foreach (glob($dir.'*.stpl') as $path) {
+			$f = basename($path);
+			$name = substr($f, 0, -strlen('.stpl'));
+			$body[] = '<li><a href="./?object='.$_GET['object'].'&action=view&id='.$name.'">'.$name.'</a></li>';
+		}
+		return implode(PHP_EOL, $body);
 	}
 
 	/***/
