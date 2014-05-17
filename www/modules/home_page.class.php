@@ -25,7 +25,7 @@ class home_page {
 		if ($doc) {
 			$f = $dir. $doc. '.stpl';
 			if (file_exists($f)) {
-				return tpl()->parse_string(file_get_contents($f), $replace, 'doc_'.$name);
+				return '<section class="page-contents">'.tpl()->parse_string(file_get_contents($f), $replace, 'doc_'.$name).'</section>';
 			}
 		}
 		return _e('Not found');
