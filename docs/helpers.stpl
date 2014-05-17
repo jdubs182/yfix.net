@@ -102,13 +102,7 @@ $value = array_get($array, 'names.joe');
 </code></pre>
 
 <blockquote>
-	<p>
-		<strong>Note:</strong>&nbsp;Want something like&nbsp;
-		<code>array_get</code>
-		&nbsp;but for objects instead? Use&nbsp;
-		<code>object_get</code>
-		.
-	</p>
+	<p><strong>Note:</strong>&nbsp;Want something like&nbsp;<code>array_get</code>&nbsp;but for objects instead? Use&nbsp;<code>object_get</code>.</p>
 </blockquote>
 
 <h3>array_only</h3>
@@ -183,14 +177,9 @@ $first = head($this-&gt;returnsArray('foo'));
 <pre><code>
 $last = last($this-&gt;returnsArray('foo'));
 </code></pre>
-<p><strong>value</strong></p>
-<p>
-	If the given value is a&nbsp;
-	<code>Closure</code>
-	, return the value returned by the&nbsp;
-	<code>Closure</code>
-	. Otherwise, return the value.
-</p>
+
+<h3>value</h3>
+<p>If the given value is a&nbsp;<code>Closure</code>, return the value returned by the&nbsp;<code>Closure</code>. Otherwise, return the value.</p>
 <pre><code>
 $value = value(function() { return 'bar'; });
 </code></pre>
