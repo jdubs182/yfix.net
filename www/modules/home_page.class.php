@@ -16,14 +16,14 @@ class home_page {
 			font-size: inherit;
 			font-weight: bold;
 		}');
+		$this->docs_dir = YF_PATH.'.dev/docs/en/';
 	}
 
 	/***/
 	function view() {
-		$dir = dirname(PROJECT_PATH).'/docs/';
 		$doc = preg_replace('~[^a-z0-9_-]+~ims', '', $_GET['id']);
 		if ($doc) {
-			$f = $dir. $doc. '.stpl';
+			$f = $this->docs_dir. $doc. '.stpl';
 			if (file_exists($f)) {
 				return '<section class="page-contents">'.tpl()->parse_string(file_get_contents($f), $replace, 'doc_'.$name).'</section>';
 			}
@@ -33,11 +33,10 @@ class home_page {
 
 	/***/
 	function show() {
-		$dir = dirname(PROJECT_PATH).'/docs/';
 		if ($_GET['id']) {
 			return $this->view();
 		}
-		foreach (glob($dir.'*.stpl') as $path) {
+		foreach (glob($this->docs_dir.'*.stpl') as $path) {
 			$f = basename($path);
 			$name = substr($f, 0, -strlen('.stpl'));
 			$body[] = '<li><a href="./?object='.$_GET['object'].'&action=view&id='.$name.'">'.$name.'</a></li>';
