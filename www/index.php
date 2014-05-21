@@ -10,7 +10,7 @@ if (file_exists($saved_settings)) {
 define('DEBUG_MODE', false);
 define('YF_PATH', '/home/www/yf/');
 define('WEB_PATH', '//yfix.net/');
-define('SITE_DEFAULT_PAGE', './?object=home_page');
+define('SITE_DEFAULT_PAGE', './?object=docs');
 define('SITE_ADVERT_NAME', 'Yfix.net');
 require dirname(__FILE__).'/project_conf.php';
 $PROJECT_CONF['tpl']['REWRITE_MODE'] = true;

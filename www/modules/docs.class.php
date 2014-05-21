@@ -1,6 +1,6 @@
 <?php
 
-class home_page {
+class docs {
 
 	/**
 	*/
