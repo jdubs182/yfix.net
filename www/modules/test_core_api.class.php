@@ -1,1 +1,1 @@
-../../../yf/.dev/tests/html/test_core_api.class.php
+../../../yf/.dev/tests/other/test_core_api.class.php
