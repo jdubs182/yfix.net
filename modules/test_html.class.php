@@ -1,1 +1,1 @@
-../../yf/.dev/tests/other/test_html.class.php
+../../yf/.dev/samples/classes/test_html.class.php

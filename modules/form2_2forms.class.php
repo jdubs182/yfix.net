@@ -1,1 +1,1 @@
-../../yf/.dev/tests/form2/form2_2forms.class.php
+../../yf/.dev/samples/form2/form2_2forms.class.php
