@@ -1,1 +1,1 @@
-../..//yf/.dev/samples/table2/table2_new_controls.class.php
+../../yf/.dev/samples/table2/table2_new_controls.class.php
