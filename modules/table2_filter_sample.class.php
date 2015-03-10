@@ -1,1 +1,0 @@
-../../yf/.dev/samples/table2/table2_filter_sample.class.php
