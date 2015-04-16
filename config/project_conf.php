@@ -1,5 +1,9 @@
 <?php
 
+$CONF['css_framework'] = 'bs3';
+$CONF['DEF_BOOTSTRAP_THEME'] = 'slate';
+$CONF['DEF_BOOTSTRAP_THEME_ADMIN'] = 'slate';
+
 define('SITE_UPLOADS_DIR',	'uploads/');				// Root folder for all uploads
 define('SITE_AVATARS_DIR',	'uploads/avatars/');		// avatars folder
 if (!defined('SITE_ADVERT_NAME')) {
