@@ -57,17 +57,17 @@
     - file: path=/etc/nginx/win-utf state=absent
     - file: path=/etc/nginx/scgi_params state=absent
     - file: path=/etc/nginx/uwsgi_params state=absent
-    - file: path=/etc/nginx/conf.d recurse=yes state=absent
-    - file: path=/etc/nginx/snippets recurse=yes state=absent
-    - template: src=nginx/basic.conf.j2 dest=/etc/nginx/basic.conf owner=root group=root mode=0644
-    - template: src=nginx/fastcgi.conf.j2 dest=/etc/nginx/fastcgi.conf owner=root group=root mode=0644
-    - template: src=nginx/mime.types.j2 dest=/etc/nginx/mime.types owner=root group=root mode=0644
-    - template: src=nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
-    - template: src=nginx/proxy_params.j2 dest=/etc/nginx/proxy_params owner=root group=root mode=0644
-    - template: src=nginx/shared.conf.j2 dest=/etc/nginx/shared.conf owner=root group=root mode=0644
-    - template: src=nginx/ssl.conf.j2 dest=/etc/nginx/ssl.conf owner=root group=root mode=0644
-    - template: src=nginx/sites-available/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
-    - file: src=/etc/nginx/sites-enabled/default dest=/etc/nginx/sites-available/default state=link
+    - file: path=/etc/nginx/conf.d state=absent
+    - file: path=/etc/nginx/snippets state=absent
+    - template: src=templates/nginx/basic.conf.j2 dest=/etc/nginx/basic.conf owner=root group=root mode=0644
+    - template: src=templates/nginx/fastcgi.conf.j2 dest=/etc/nginx/fastcgi.conf owner=root group=root mode=0644
+    - template: src=templates/nginx/mime.types.j2 dest=/etc/nginx/mime.types owner=root group=root mode=0644
+    - template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
+    - template: src=templates/nginx/proxy_params.j2 dest=/etc/nginx/proxy_params owner=root group=root mode=0644
+    - template: src=templates/nginx/shared.conf.j2 dest=/etc/nginx/shared.conf owner=root group=root mode=0644
+    - template: src=templates/nginx/ssl.conf.j2 dest=/etc/nginx/ssl.conf owner=root group=root mode=0644
+    - template: src=templates/nginx/sites-available/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
+    - file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enableddefault state=link
     - name: Ensure nginx is started and enabled to start at boot.
       service: name=nginx state=started enabled=yes
       notify: restart nginx
@@ -90,10 +90,10 @@
         - php5-xcache
         - php5-xdebug
         - php5-xhprof
-    - template: src=php-fpm/php.ini.j2 dest=/etc/php5/fpm/php.ini owner=root group=root mode=0644
-    - template: src=php-fpm/php.ini.j2 dest=/etc/php5/cli/php.ini owner=root group=root mode=0644
-    - template: src=php-fpm/php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
-    - template: src=php-fpm/pool.d/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0644
+    - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/fpm/php.ini owner=root group=root mode=0644
+    - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/cli/php.ini owner=root group=root mode=0644
+    - template: src=templates/php-fpm/php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
+    - template: src=templates/php-fpm/pool.d/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0644
     - name: Ensure php-fpm is started and enabled to start at boot.
       service: name=php-fom state=started enabled=yes
       notify: restart php-fpm
@@ -102,7 +102,7 @@
     - apt: "name={{ item }} state=installed"
       with_items:
         - mysql-server-5.6
-    - template: src=mysql/my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
+    - template: src=templates/mysql/my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
     - name: Ensure mysql is started and enabled to start at boot.
       service: name=mysql state=started enabled=yes
       notify: restart mysql
@@ -111,7 +111,7 @@
     - apt: "name={{ item }} state=installed"
       with_items:
         - memcached
-    - template: src=memcached/memcached.conf.j2 dest=/etc/memcached.conf owner=root group=root mode=0644
+    - template: src=templates/memcached/memcached.conf.j2 dest=/etc/memcached.conf owner=root group=root mode=0644
     - name: Ensure memcached is started and enabled to start at boot.
       service: name=memcached state=started enabled=yes
       notify: restart memcached
