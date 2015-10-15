@@ -1,0 +1,53 @@
+---
+- hosts: all
+  sudo: yes
+
+  pre_tasks:
+    - apt_repository: repo='ppa:nginx/stable'
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+
+  tasks:
+    - name: Install required and useful packages
+      apt: "name={{ item }} state=installed"
+      with_items:
+        - python-software-properties
+        - wget
+        - curl
+        - vim
+        - htop
+        - iotop
+        - bwm-ng
+        - tree
+        - ack-grep
+        - colordiff
+        - lzop
+        - gawk
+        - geoip-bin
+        - geoip-database
+        - php5
+        - php5-cli
+        - php5-curl
+        - php5-fpm
+        - php5-gd
+        - php5-geoip
+        - php5-gmp
+        - php5-imagick
+        - php5-intl
+        - php5-mcrypt
+        - php5-memcache
+        - php5-mysql
+        - php5-xcache
+        - php5-xdebug
+        - php5-xhprof
+        - mysql-server-5.6
+        - nginx-extras
+
+    - name: Remove not needed packages
+      apt: "name={{ item }} state=absent"
+      with_items:
+        - landscape-client
+        - landscape-common
+
+    - name: Generate locales
+      command: "locale-gen ru_RU.UTF-8 ru_UA.UTF-8 uk_UA.UTF-8"
