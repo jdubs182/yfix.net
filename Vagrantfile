@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
-  config.vm.synced_folder "./", "/sites/default", type: "nfs"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "./", "/sites/default", type: "nfs", mount_options: ['vers=4']
   config.vm.provision "ansible" do |ansible|
     ansible.host_key_checking = false
     ansible.playbook = "ansible/main.yml"
