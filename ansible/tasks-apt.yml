@@ -1,0 +1,23 @@
+    - name: Remove not needed packages
+      apt: "name={{ item }} state=absent"
+      with_items:
+        - landscape-client
+        - landscape-common
+
+    - name: Install required and useful packages
+      apt: "name={{ item }} state=installed"
+      with_items:
+        - python-software-properties
+        - wget
+        - curl
+        - vim
+        - htop
+        - iotop
+        - bwm-ng
+        - tree
+        - ack-grep
+        - colordiff
+        - lzop
+        - gawk
+        - geoip-bin
+        - geoip-database

@@ -31,3 +31,4 @@ www/uploads/site_map/
 www/stats/
 
 .vagrant
+config.yml

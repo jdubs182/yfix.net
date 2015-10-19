@@ -1,0 +1,8 @@
+    # YF framework
+    - name: git clone YF framework
+      git: repo=https://github.com/yfix/yf.git dest=/sites/yf depth=1 recursive=yes update=yes
+    - file: path=/sites/yf state=directory mode=0755
+    - file: path=/sites/yf owner=www-data group=www-data recurse=yes
+    - file: path=/home/www state=directory mode=0755
+    - file: path=/home/www owner=www-data group=www-data recurse=yes
+    - file: src=/sites/yf dest=/home/www/yf state=link

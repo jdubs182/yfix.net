@@ -2,120 +2,26 @@
 - hosts: all
   sudo: yes
 
+  vars:
+    - include: ../.dev/config.yml
+
   handlers:
-    - name: restart nginx
-      service: name=nginx state=restarted
-    - name: restart php-fpm
-      service: name=php5-fpm state=restarted
-    - name: restart mysql
-      service: name=mysql state=restarted
-    - name: restart memcached
-      service: name=memcached state=restarted
+#    - include: handlers.yml
 
   pre_tasks:
-    - apt_repository: repo='ppa:nginx/stable'
-    - name: Update apt cache if needed.
-      apt: update_cache=yes cache_valid_time=3600
+#    - include: pre-tasks.yml
 
   roles:
-    - yfix.mc
+#    - yfix.mc
 
   tasks:
-    - name: Generate locales
-      command: "locale-gen ru_RU.UTF-8 ru_UA.UTF-8 uk_UA.UTF-8"
+#    - include: tasks-apt.yml
+#    - include: tasks-other.yml
+#    - include: tasks-nginx.yml
+#    - include: tasks-php-fpm.yml
+#    - include: tasks-mysql.yml
+#    - include: tasks-memcached.yml
+    - include: tasks-yf-framework.yml
 
-    - name: Remove not needed packages
-      apt: "name={{ item }} state=absent"
-      with_items:
-        - landscape-client
-        - landscape-common
-
-    - name: Install required and useful packages
-      apt: "name={{ item }} state=installed"
-      with_items:
-        - python-software-properties
-        - wget
-        - curl
-        - vim
-        - htop
-        - iotop
-        - bwm-ng
-        - tree
-        - ack-grep
-        - colordiff
-        - lzop
-        - gawk
-        - geoip-bin
-        - geoip-database
-
-    # nginx
-    - apt: "name={{ item }} state=installed"
-      with_items:
-        - geoip-bin
-        - geoip-database
-        - nginx-extras
-    - file: path=/etc/nginx/fastcgi_params state=absent
-    - file: path=/etc/nginx/koi-utf state=absent
-    - file: path=/etc/nginx/koi-win state=absent
-    - file: path=/etc/nginx/win-utf state=absent
-    - file: path=/etc/nginx/scgi_params state=absent
-    - file: path=/etc/nginx/uwsgi_params state=absent
-    - file: path=/etc/nginx/conf.d state=absent
-    - file: path=/etc/nginx/snippets state=absent
-    - template: src=templates/nginx/basic.conf.j2 dest=/etc/nginx/basic.conf owner=root group=root mode=0644
-    - template: src=templates/nginx/fastcgi.conf.j2 dest=/etc/nginx/fastcgi.conf owner=root group=root mode=0644
-    - template: src=templates/nginx/mime.types.j2 dest=/etc/nginx/mime.types owner=root group=root mode=0644
-    - template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
-    - template: src=templates/nginx/proxy_params.j2 dest=/etc/nginx/proxy_params owner=root group=root mode=0644
-    - template: src=templates/nginx/shared.conf.j2 dest=/etc/nginx/shared.conf owner=root group=root mode=0644
-    - template: src=templates/nginx/ssl.conf.j2 dest=/etc/nginx/ssl.conf owner=root group=root mode=0644
-    - template: src=templates/nginx/sites-available/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
-    - file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
-    - file: path=/var/log/nginx state=directory owner=root group=root mode=0644
-    - name: Ensure nginx is started and enabled to start at boot.
-      service: name=nginx state=started enabled=yes
-      notify: restart nginx
-
-    # php-fpm
-    - apt: "name={{ item }} state=installed"
-      with_items:
-        - php5
-        - php5-cli
-        - php5-curl
-        - php5-fpm
-        - php5-gd
-        - php5-geoip
-        - php5-gmp
-        - php5-imagick
-        - php5-intl
-        - php5-mcrypt
-        - php5-memcache
-        - php5-mysql
-        - php5-xcache
-        - php5-xdebug
-        - php5-xhprof
-    - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/fpm/php.ini owner=root group=root mode=0644
-    - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/cli/php.ini owner=root group=root mode=0644
-    - template: src=templates/php-fpm/php-fpm.conf.j2 dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
-    - template: src=templates/php-fpm/pool.d/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0644
-    - name: Ensure php-fpm is started and enabled to start at boot.
-      service: name=php5-fpm state=started enabled=yes
-      notify: restart php-fpm
-
-    # mysql
-    - apt: "name={{ item }} state=installed"
-      with_items:
-        - mysql-server-5.6
-    - template: src=templates/mysql/my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
-    - name: Ensure mysql is started and enabled to start at boot.
-      service: name=mysql state=started enabled=yes
-      notify: restart mysql
-
-    # memcached
-    - apt: "name={{ item }} state=installed"
-      with_items:
-        - memcached
-    - template: src=templates/memcached/memcached.conf.j2 dest=/etc/memcached.conf owner=root group=root mode=0644
-    - name: Ensure memcached is started and enabled to start at boot.
-      service: name=memcached state=started enabled=yes
-      notify: restart memcached
+  post_tasks:
+#    - include: post-tasks.yml

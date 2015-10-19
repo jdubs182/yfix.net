@@ -1,0 +1,10 @@
+---
+    # memcached
+    - apt: "name={{ item }} state=installed"
+      with_items:
+        - memcached
+    - template: src=templates/memcached/memcached.conf.j2 dest=/etc/memcached.conf owner=root group=root mode=0644
+      notify: restart memcached
+    - name: Ensure memcached is started and enabled to start at boot.
+      service: name=memcached state=started enabled=yes
+      notify: restart memcached

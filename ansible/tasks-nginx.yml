@@ -1,0 +1,36 @@
+---
+    # nginx
+    - apt: "name={{ item }} state=installed"
+      with_items:
+        - geoip-bin
+        - geoip-database
+        - nginx-extras
+    - file: path=/etc/nginx/fastcgi_params state=absent
+    - file: path=/etc/nginx/koi-utf state=absent
+    - file: path=/etc/nginx/koi-win state=absent
+    - file: path=/etc/nginx/win-utf state=absent
+    - file: path=/etc/nginx/scgi_params state=absent
+    - file: path=/etc/nginx/uwsgi_params state=absent
+    - file: path=/etc/nginx/conf.d state=absent
+    - file: path=/etc/nginx/snippets state=absent
+    - template: src=templates/nginx/basic.conf.j2 dest=/etc/nginx/basic.conf owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/fastcgi.conf.j2 dest=/etc/nginx/fastcgi.conf owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/mime.types.j2 dest=/etc/nginx/mime.types owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/nginx.conf.j2 dest=/etc/nginx/nginx.conf owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/proxy_params.j2 dest=/etc/nginx/proxy_params owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/shared.conf.j2 dest=/etc/nginx/shared.conf owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/ssl.conf.j2 dest=/etc/nginx/ssl.conf owner=root group=root mode=0644
+      notify: restart nginx
+    - template: src=templates/nginx/sites-available/default.j2 dest=/etc/nginx/sites-available/default owner=root group=root mode=0644
+      notify: restart nginx
+    - file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
+    - file: path=/var/log/nginx state=directory owner=root group=root mode=0644
+    - name: Ensure nginx is started and enabled to start at boot.
+      service: name=nginx state=started enabled=yes
+      notify: restart nginx

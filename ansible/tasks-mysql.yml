@@ -1,0 +1,10 @@
+---
+    # mysql
+    - apt: "name={{ item }} state=installed"
+      with_items:
+        - mysql-server-5.6
+    - template: src=templates/mysql/my.cnf.j2 dest=/etc/mysql/my.cnf owner=root group=root mode=0644
+      notify: restart mysql
+    - name: Ensure mysql is started and enabled to start at boot.
+      service: name=mysql state=started enabled=yes
+      notify: restart mysql
