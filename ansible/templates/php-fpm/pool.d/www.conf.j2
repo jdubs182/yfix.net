@@ -18,6 +18,6 @@ pm.max_requests = 100
 pm.status_path = /fpm-status
 chdir = /
 catch_workers_output = yes
-env[PATH] = /srv/www/phpcs/scripts/:/usr/local/bin:/usr/bin:/bin
+env[PATH] = /usr/local/bin:/usr/bin:/bin
 php_admin_value[error_log] = /var/log/fpm-php.www.log
 php_admin_flag[log_errors] = on

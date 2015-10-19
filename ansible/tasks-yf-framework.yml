@@ -6,3 +6,8 @@
     - file: path=/home/www state=directory mode=0755
     - file: path=/home/www owner=www-data group=www-data recurse=yes
     - file: src=/sites/yf dest=/home/www/yf state=link
+    - apt: name=python-mysqldb state=present
+    - mysql_user: name={{mysql_db_user}} password={{mysql_db_pswd}} host="%" priv={{mysql_db_name}}.*:ALL state=present
+    - mysql_db: name={{mysql_db_name}} state=present collation=utf8_general_ci encoding=utf8
+    - copy: src=files/latest-dump.sql dest=/tmp
+    - mysql_db: name={{mysql_db_name}} state=import target=/tmp/latest-dump.sql
