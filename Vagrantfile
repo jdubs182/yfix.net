@@ -28,14 +28,3 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/main.yml"
   end
 end
-
-#mysql_databases:
-#  - name: "{{ drupal_mysql_database }}"
-#    encoding: utf8
-#    collation: utf8_general_ci
-
-#mysql_users:
-#  - name: "{{ drupal_mysql_user }}"
-#    host: "%"
-#    password: "{{ drupal_mysql_password }}"
-#    priv: "{{ drupal_mysql_database }}.*:ALL"
