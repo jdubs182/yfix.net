@@ -5,6 +5,7 @@ vagrant_machine_name: yfix-test
 vagrant_ip: 192.168.33.123
 vagrant_memory: 512
 vagrant_cpus: 2
+mysql_root_pswd: __put_here_db_pswd__
 mysql_db_name: __put_here_db_name__
 mysql_db_user: __put_here_db_user__
 mysql_db_pswd: __put_here_db_pswd__

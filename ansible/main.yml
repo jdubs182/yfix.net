@@ -2,9 +2,6 @@
 - hosts: all
   sudo: yes
 
-  vars:
-    - include: ../.dev/config.yml
-
   handlers:
 #    - include: handlers.yml
 
