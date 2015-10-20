@@ -5,20 +5,6 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `y_activity_types`;
-CREATE TABLE `y_activity_types` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `desc` varchar(255) NOT NULL,
-  `points` varchar(255) NOT NULL,
-  `min_value` varchar(255) NOT NULL,
-  `min_time` int(10) unsigned NOT NULL,
-  `active` enum('1','0') NOT NULL,
-  `table_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `y_admin_walls`;
 CREATE TABLE `y_admin_walls` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -34,60 +20,6 @@ CREATE TABLE `y_admin_walls` (
   `new_data` text NOT NULL,
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_articles_texts`;
-CREATE TABLE `y_articles_texts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cat_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `is_own_article` enum('1','0') NOT NULL,
-  `author_name` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `summary` text NOT NULL,
-  `full_text` longtext NOT NULL,
-  `status` enum('new','edited','suspended','active') NOT NULL,
-  `credentials` text NOT NULL,
-  `add_date` int(10) unsigned NOT NULL,
-  `edit_date` int(10) unsigned NOT NULL,
-  `views` int(10) unsigned NOT NULL,
-  `short_url` varchar(255) NOT NULL,
-  `activity` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_blog_posts`;
-CREATE TABLE `y_blog_posts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id2` int(10) unsigned NOT NULL,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `poster_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `text` text NOT NULL,
-  `add_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `edit_date` int(10) unsigned NOT NULL,
-  `ip` varchar(15) NOT NULL DEFAULT '',
-  `num_reads` int(10) unsigned NOT NULL DEFAULT '0',
-  `attach_image` varchar(255) NOT NULL DEFAULT '',
-  `disable_comments` enum('0','1') NOT NULL DEFAULT '0',
-  `mode_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `mode_text` varchar(255) NOT NULL DEFAULT '',
-  `mood` varchar(255) NOT NULL DEFAULT '',
-  `privacy` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `allow_comments` tinyint(3) unsigned NOT NULL,
-  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `custom_cat_id` smallint(5) unsigned NOT NULL,
-  `activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `old_id` int(10) unsigned NOT NULL,
-  `mask` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `id2` (`id2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -607,202 +539,6 @@ CREATE TABLE `y_form_attributes` (
   `value` longtext NOT NULL,
   `active` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`form_id`,`field`,`attr`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_forum_categories`;
-CREATE TABLE `y_forum_categories` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `desc` varchar(255) NOT NULL DEFAULT '',
-  `status` char(1) NOT NULL DEFAULT 'a',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `order` int(10) unsigned NOT NULL DEFAULT '0',
-  `icon` varchar(255) NOT NULL DEFAULT '',
-  `language` varchar(12) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_forum_forums`;
-CREATE TABLE `y_forum_forums` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent` int(10) unsigned NOT NULL DEFAULT '0',
-  `category` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `desc` varchar(255) NOT NULL DEFAULT '',
-  `created` int(10) unsigned NOT NULL DEFAULT '0',
-  `status` char(1) NOT NULL DEFAULT 'a',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `icon` varchar(255) NOT NULL DEFAULT '',
-  `order` int(10) unsigned NOT NULL DEFAULT '0',
-  `num_views` int(10) unsigned NOT NULL DEFAULT '0',
-  `num_topics` int(10) unsigned NOT NULL DEFAULT '0',
-  `num_posts` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_post_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_post_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `language` varchar(12) NOT NULL DEFAULT '0',
-  `options` char(10) NOT NULL,
-  `user_groups` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `y_forum_forums` (`id`, `parent`, `category`, `name`, `desc`, `created`, `status`, `active`, `icon`, `order`, `num_views`, `num_topics`, `num_posts`, `last_post_id`, `last_post_date`, `language`, `options`, `user_groups`) VALUES
-(1,	0,	1,	'Test forum',	'First auto-created test forum',	1386276665,	'a',	1,	'',	0,	0,	0,	0,	0,	0,	'0',	'',	'');
-
-DROP TABLE IF EXISTS `y_forum_groups`;
-CREATE TABLE `y_forum_groups` (
-  `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(32) NOT NULL DEFAULT '',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `icon` varchar(250) DEFAULT '',
-  `prefix` varchar(250) DEFAULT '',
-  `suffix` varchar(250) DEFAULT '',
-  `is_admin` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `is_moderator` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `view_board` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `view_ip` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `view_member_info` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `view_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `view_post_closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `post_new_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `reply_own_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `reply_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_own_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `open_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `close_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `pin_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `unpin_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `move_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `approve_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `unapprove_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `open_close_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_own_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_other_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `move_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `approve_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `unapprove_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `split_merge` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_profile` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_profile` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `hide_from_list` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `avatar_upload` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `use_search` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `use_pm` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `max_messages` int(5) DEFAULT '50',
-  `email_friend` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `search_flood` mediumint(6) DEFAULT '20',
-  `make_polls` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `vote_polls` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_forum_moderators`;
-CREATE TABLE `y_forum_moderators` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `forums_list` text NOT NULL,
-  `member_name` varchar(32) NOT NULL DEFAULT '',
-  `member_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `view_ip` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_own_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `open_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `close_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `pin_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `unpin_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `move_topics` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `open_close_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_own_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `delete_other_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `move_posts` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `split_merge` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_own_profile` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_other_profile` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `make_polls` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `vote_polls` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_forum_posts`;
-CREATE TABLE `y_forum_posts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum` int(10) unsigned NOT NULL DEFAULT '0',
-  `topic` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_name` varchar(64) NOT NULL DEFAULT '',
-  `created` int(10) unsigned NOT NULL DEFAULT '0',
-  `status` char(1) NOT NULL DEFAULT 'a',
-  `subject` varchar(255) NOT NULL DEFAULT '',
-  `text` longtext NOT NULL,
-  `new_topic` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `edit_name` varchar(64) NOT NULL DEFAULT '',
-  `edit_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `show_edit_by` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `use_sig` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `use_emo` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `icon_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `poster_ip` varchar(16) NOT NULL DEFAULT '',
-  `language` varchar(12) NOT NULL DEFAULT '0',
-  `activity` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `status` (`status`),
-  KEY `created` (`created`),
-  KEY `topic` (`topic`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_gallery_photos`;
-CREATE TABLE `y_gallery_photos` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id2` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cat_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `folder_id` int(10) unsigned NOT NULL,
-  `img_name` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `desc` text NOT NULL,
-  `show_in_ads` enum('0','1') NOT NULL DEFAULT '0',
-  `diplay_order` int(10) unsigned NOT NULL DEFAULT '0',
-  `general_sort_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `folder_sort_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `add_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `other_info` text NOT NULL,
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  `is_public` enum('0','1') NOT NULL DEFAULT '0',
-  `is_featured` enum('0','1') NOT NULL DEFAULT '0',
-  `geo_cc` char(2) NOT NULL,
-  `geo_rc` char(2) NOT NULL,
-  `priority` int(11) NOT NULL DEFAULT '0',
-  `allow_rate` enum('1','0') NOT NULL,
-  `rating` float NOT NULL,
-  `num_votes` int(10) unsigned NOT NULL,
-  `votes_sum` int(11) NOT NULL,
-  `last_vote_date` int(10) unsigned NOT NULL,
-  `allow_tagging` enum('0','1') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `add_date` (`add_date`),
-  KEY `folder_id` (`folder_id`),
-  KEY `is_public` (`is_public`),
-  KEY `geo_cc` (`geo_cc`),
-  KEY `geo_rc` (`geo_rc`),
-  KEY `rating` (`rating`),
-  KEY `id2` (`id2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -1698,195 +1434,6 @@ INSERT INTO `y_languages` (`code`, `code3`, `name`, `native`, `country`, `active
 ('zh',	'zho',	'Chinese',	'中文 (Zhōngwén), 汉语, 漢語',	'cn',	'0'),
 ('zu',	'zul',	'Zulu',	'isiZulu',	'',	'0');
 
-DROP TABLE IF EXISTS `y_moods`;
-CREATE TABLE `y_moods` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  `locale` char(7) NOT NULL DEFAULT 'en',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_news`;
-CREATE TABLE `y_news` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `head_text` text NOT NULL,
-  `full_text` text NOT NULL,
-  `meta_keywords` text NOT NULL,
-  `meta_desc` text NOT NULL,
-  `add_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_pages`;
-CREATE TABLE `y_pages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `locale` char(5) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `heading` varchar(255) NOT NULL DEFAULT '',
-  `text` longtext NOT NULL,
-  `meta_keywords` text NOT NULL,
-  `meta_desc` text NOT NULL,
-  `date_created` datetime DEFAULT NULL,
-  `date_modified` datetime DEFAULT NULL,
-  `content_type` tinyint(2) unsigned NOT NULL DEFAULT '1',
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `locale` (`locale`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `y_pages` (`id`, `locale`, `name`, `title`, `heading`, `text`, `meta_keywords`, `meta_desc`, `date_created`, `date_modified`, `content_type`, `active`) VALUES
-(1,	'',	'docs_helpers',	'Helper Functions',	'',	'<p><span style=\"color: inherit; font-family: inherit; font-size: 24.5px; font-weight: bold; line-height: 42px;\">array_add</span><br></p><p>The&nbsp;<code>array_add</code>&nbsp;function adds a given key / value pair to the array if the given key doesn\'t already exist in the array.</p><pre><code>$array = array(\'foo\' =&gt; \'bar\');\r\n\r\n$array = array_add($array, \'key\', \'value\');</code></pre><h3>array_divide</h3><p>The&nbsp;<code>array_divide</code>&nbsp;function returns two arrays, one containing the keys, and the other containing the values of the original array.</p><pre><code>$array = array(\'foo\' =&gt; \'bar\');\r\n\r\nlist($keys, $values) = array_divide($array);</code></pre><h3>array_dot</h3><p>The&nbsp;<code>array_dot</code>&nbsp;function flattens a multi-dimensional array into a single level array that uses \"dot\" notation to indicate depth.</p><pre><code>$array = array(\'foo\' =&gt; array(\'bar\' =&gt; \'baz\'));\r\n\r\n$array = array_dot($array);\r\n\r\n// array(\'foo.bar\' =&gt; \'baz\');</code></pre><h3>array_except</h3><p>The&nbsp;<code>array_except</code>&nbsp;method removes the given key / value pairs from the array.</p><pre><code>$array = array_except($array, array(\'keys\', \'to\', \'remove\'));</code></pre><h3>array_fetch</h3><p>The&nbsp;<code>array_fetch</code>&nbsp;method returns a flattened array containing the selected nested element.</p><pre><code>$array = array(\r\n    array(\'developer\' =&gt; array(\'name\' =&gt; \'Taylor\')),\r\n    array(\'developer\' =&gt; array(\'name\' =&gt; \'Dayle\')),\r\n);\r\n\r\n$array = array_fetch($array, \'developer.name\');\r\n\r\n// array(\'Taylor\', \'Dayle\');</code></pre><h3>array_first</h3><p>The&nbsp;<code>array_first</code>&nbsp;method returns the first element of an array passing a given truth test.</p><pre><code>$array = array(100, 200, 300);\r\n\r\n$value = array_first($array, function($key, $value)\r\n{\r\n    return $value &gt;= 150;\r\n});</code></pre><p>A default value may also be passed as the third parameter:</p><pre><code>$value = array_first($array, $callback, $default);</code></pre><h3>array_last</h3><p>The&nbsp;<code>array_last</code>&nbsp;method returns the last element of an array passing a given truth test.</p><pre><code>$array = array(350, 400, 500, 300, 200, 100);\r\n\r\n$value = array_last($array, function($key, $value)\r\n{\r\n    return $value &gt; 350;\r\n});\r\n\r\n// 500</code></pre><p>A default value may also be passed as the third parameter:</p><pre><code>$value = array_last($array, $callback, $default);</code></pre><h3>array_flatten</h3><p>The&nbsp;<code>array_flatten</code>&nbsp;method will flatten a multi-dimensional array into a single level.</p><pre><code>$array = array(\'name\' =&gt; \'Joe\', \'languages\' =&gt; array(\'PHP\', \'Ruby\'));\r\n\r\n$array = array_flatten($array);\r\n\r\n// array(\'Joe\', \'PHP\', \'Ruby\');</code></pre><h3>array_forget</h3><p>The&nbsp;<code>array_forget</code>&nbsp;method will remove a given key / value pair from a deeply nested array using \"dot\" notation.</p><pre><code>$array = array(\'names\' =&gt; array(\'joe\' =&gt; array(\'programmer\')));\r\n\r\narray_forget($array, \'names.joe\');</code></pre><h3>array_get</h3><p>The&nbsp;<code>array_get</code>&nbsp;method will retrieve a given value from a deeply nested array using \"dot\" notation.</p><pre><code>$array = array(\'names\' =&gt; array(\'joe\' =&gt; array(\'programmer\')));\r\n\r\n$value = array_get($array, \'names.joe\');</code></pre><blockquote><p><strong>Note:</strong>&nbsp;Want something like&nbsp;<code>array_get</code>&nbsp;but for objects instead? Use&nbsp;<code>object_get</code>.</p></blockquote><h3>array_only</h3><p>The&nbsp;<code>array_only</code>&nbsp;method will return only the specified key / value pairs from the array.</p><pre><code>$array = array(\'name\' =&gt; \'Joe\', \'age\' =&gt; 27, \'votes\' =&gt; 1);\r\n\r\n$array = array_only($array, array(\'name\', \'votes\'));</code></pre><h3>array_pluck</h3><p>The&nbsp;<code>array_pluck</code>&nbsp;method will pluck a list of the given key / value pairs from the array.</p><pre><code>$array = array(array(\'name\' =&gt; \'Taylor\'), array(\'name\' =&gt; \'Dayle\'));\r\n\r\n$array = array_pluck($array, \'name\');\r\n\r\n// array(\'Taylor\', \'Dayle\');</code></pre><h3>array_pull</h3><p>The&nbsp;<code>array_pull</code>&nbsp;method will return a given key / value pair from the array, as well as remove it.</p><pre><code>$array = array(\'name\' =&gt; \'Taylor\', \'age\' =&gt; 27);\r\n\r\n$name = array_pull($array, \'name\');</code></pre><h3>array_set</h3><p>The&nbsp;<code>array_set</code>&nbsp;method will set a value within a deeply nested array using \"dot\" notation.</p><pre><code>$array = array(\'names\' =&gt; array(\'programmer\' =&gt; \'Joe\'));\r\n\r\narray_set($array, \'names.editor\', \'Taylor\');</code></pre><h3>array_sort</h3><p>The&nbsp;<code>array_sort</code>&nbsp;method sorts the array by the results of the given Closure.</p><pre><code>$array = array(\r\n    array(\'name\' =&gt; \'Jill\'),\r\n    array(\'name\' =&gt; \'Barry\'),\r\n);\r\n\r\n$array = array_values(array_sort($array, function($value)\r\n{\r\n    return $value[\'name\'];\r\n}));</code></pre><h3>array_where</h3><p>Filter the array using the given Closure.</p><pre><code>$array = array(100, \'200\', 300, \'400\', 500);\r\n\r\n$array = array_where($array, function($key, $value)\r\n{\r\n    return is_string($value);\r\n});\r\n\r\n// Array ( [1] =&gt; 200 [3] =&gt; 400 )</code></pre><h3>head</h3><p>Return the first element in the array. Useful for method chaining in PHP 5.3.x.</p><pre><code>$first = head($this-&gt;returnsArray(\'foo\'));</code></pre><h3>last</h3><p>Return the last element in the array. Useful for method chaining.</p><pre><code>$last = last($this-&gt;returnsArray(\'foo\'));</code></pre><p><strong>value</strong></p><p>If the given value is a&nbsp;<code>Closure</code>, return the value returned by the&nbsp;<code>Closure</code>. Otherwise, return the value.</p><pre><code>$value = value(function() { return \'bar\'; });</code></pre><h3>with</h3><p>Return the given object. Useful for method chaining constructors in PHP 5.3.x.</p><pre><code>$value = with(new Foo)-&gt;doWork();</code></pre>',	'',	'',	'2014-05-16 13:15:50',	'2014-05-16 14:24:30',	1,	'1');
-
-DROP TABLE IF EXISTS `y_polls`;
-CREATE TABLE `y_polls` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `object_name` varchar(255) NOT NULL,
-  `object_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `question` varchar(255) NOT NULL,
-  `add_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `choices` text NOT NULL,
-  `votes` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `multiple` enum('0','1') NOT NULL DEFAULT '0',
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `object_name` (`object_name`),
-  KEY `object_id` (`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_regions`;
-CREATE TABLE `y_regions` (
-  `code` char(2) NOT NULL,
-  `country` char(2) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  KEY `country` (`country`),
-  KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_search_engines`;
-CREATE TABLE `y_search_engines` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `search_url` varchar(255) NOT NULL DEFAULT '',
-  `q_s_word` varchar(255) NOT NULL DEFAULT '',
-  `q_s_word2` varchar(255) NOT NULL DEFAULT '',
-  `q_s_charset` varchar(255) NOT NULL DEFAULT '',
-  `def_charset` varchar(255) NOT NULL DEFAULT '',
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_shop_admin_to_supplier`;
-CREATE TABLE `y_shop_admin_to_supplier` (
-  `admin_id` int(11) NOT NULL,
-  `supplier_id` int(11) NOT NULL,
-  `main_cat_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`admin_id`,`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_shop_manufacturers`;
-CREATE TABLE `y_shop_manufacturers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cat_ids` varchar(255) NOT NULL,
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `aliaces` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `meta_keywords` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `meta_desc` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `image` int(10) unsigned NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  `active` int(3) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_shop_products`;
-CREATE TABLE `y_shop_products` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `image` tinyint(1) NOT NULL DEFAULT '0',
-  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `features` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `meta_keywords` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `meta_desc` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `external_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `cat_id` int(11) NOT NULL,
-  `model` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `sku` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `quantity` int(10) NOT NULL DEFAULT '100',
-  `stock_status_id` int(10) NOT NULL DEFAULT '0',
-  `manufacturer_id` int(10) NOT NULL DEFAULT '0',
-  `supplier_id` int(10) NOT NULL DEFAULT '0',
-  `price` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `price_promo` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `price_partner` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `price_raw` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `old_price` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `currency` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `add_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `update_date` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_viewed_date` int(10) NOT NULL DEFAULT '0',
-  `featured` tinyint(1) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `viewed` int(10) NOT NULL DEFAULT '0',
-  `sold` int(10) NOT NULL DEFAULT '0',
-  `status` int(10) NOT NULL DEFAULT '0',
-  `articul` varchar(32) NOT NULL DEFAULT '',
-  `origin_url` varchar(255) NOT NULL,
-  `source` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cat_id` (`cat_id`),
-  KEY `active` (`active`),
-  KEY `viewed` (`viewed`),
-  KEY `sold` (`sold`),
-  KEY `active_cat_id` (`active`,`cat_id`),
-  KEY `add_date` (`add_date`),
-  KEY `update_date` (`update_date`),
-  KEY `manufacturer_id` (`manufacturer_id`),
-  KEY `supplier_id` (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_shop_product_units`;
-CREATE TABLE `y_shop_product_units` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(32) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `step` varchar(255) NOT NULL DEFAULT '1',
-  `k` decimal(8,3) unsigned NOT NULL DEFAULT '1.000',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_shop_suppliers`;
-CREATE TABLE `y_shop_suppliers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '',
-  `url` varchar(255) NOT NULL,
-  `desc` varchar(255) NOT NULL,
-  `meta_keywords` text NOT NULL,
-  `meta_desc` text NOT NULL,
-  `image` int(10) unsigned NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  `admin_id` int(3) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `y_static_pages`;
 CREATE TABLE `y_static_pages` (
@@ -2062,19 +1609,7 @@ INSERT INTO `y_sys_blocks` (`id`, `name`, `desc`, `stpl_name`, `method_name`, `t
 (2,	'left_area',	'',	'',	'',	'user',	'1'),
 (3,	'right_area',	'',	'',	'',	'user',	'1'),
 (4,	'center_area',	'',	'',	'main.tasks',	'admin',	'1'),
-(6,	'left_area',	'',	'',	'',	'admin',	'1'),
-(7,	'basket_micro',	'',	'',	'shop._basket_micro',	'user',	'1'),
-(8,	'head_nav',	'',	'',	'shop._block_nav_head',	'user',	'1'),
-(9,	'products_latest',	'',	'',	'shop._block_products_latest',	'user',	'1'),
-(10,	'products_latest_sold',	'',	'',	'shop._block_products_latest_sold',	'user',	'1'),
-(12,	'products_popular',	'',	'',	'shop._block_products_popular',	'user',	'1'),
-(13,	'products_closeout',	'',	'',	'shop._block_products_closeout',	'user',	'1'),
-(14,	'products_also_purchased',	'',	'',	'shop._block_products_also_purchased',	'user',	'1'),
-(15,	'product_sets_top',	'',	'',	'shop._block_product_sets_top',	'user',	'1'),
-(16,	'product_sets_left',	'',	'',	'shop._block_product_sets_left',	'user',	'1'),
-(20,	'product_sets_center',	'',	'',	'shop._block_product_sets_center',	'user',	'1'),
-(21,	'product_sets_top_clone',	'',	'',	'shop._block_product_sets_top',	'user',	'0'),
-(22,	'products_viewed',	'',	'',	'shop._block_products_viewed',	'user',	'1');
+(6,	'left_area',	'',	'',	'',	'admin',	'1');
 
 DROP TABLE IF EXISTS `y_sys_block_rules`;
 CREATE TABLE `y_sys_block_rules` (
@@ -2119,28 +1654,6 @@ INSERT INTO `y_sys_block_rules` (`id`, `block_id`, `rule_type`, `user_groups`, `
 (34,	4,	'ALLOW',	',3,',	'admin_account,\nadmin_home,\nadmin_wall,\nmanage_shop.attribute_activate,\nmanage_shop.attribute_add,\nmanage_shop.attribute_delete,\nmanage_shop.attribute_edit,\nmanage_shop.attributes,\nmanage_shop.filter_save,\nmanage_shop.product_activate,\nmanage_shop.product_add,\nmanage_shop.product_clone,\nmanage_shop.product_delete,\nmanage_shop.product_edit,\nmanage_shop.product_image_search,\nmanage_shop.product_image_upload,\nmanage_shop.product_image_delete,\nmanage_shop.products,\nmanage_shop.set_main_image,\n',	'',	'',	'',	'1',	3,	'',	'',	''),
 (35,	6,	'ALLOW',	',3,',	'',	'',	'',	'',	'1',	3,	'',	'',	''),
 (36,	22,	'ALLOW',	'',	'',	'',	'',	'',	'1',	0,	'',	'',	'');
-
-DROP TABLE IF EXISTS `y_sys_cache`;
-CREATE TABLE `y_sys_cache` (
-  `key` varchar(64) NOT NULL DEFAULT '',
-  `value` text NOT NULL,
-  `time` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_cache_info`;
-CREATE TABLE `y_sys_cache_info` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `object` varchar(32) NOT NULL DEFAULT '',
-  `action` varchar(32) NOT NULL DEFAULT '',
-  `query_string` varchar(128) NOT NULL DEFAULT '',
-  `site_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `group_id` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `hash` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `object` (`object`,`action`,`query_string`,`site_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `y_sys_categories`;
@@ -2250,48 +1763,6 @@ INSERT INTO `y_sys_category_items` (`id`, `cat_id`, `parent_id`, `name`, `desc`,
 (61,	3,	0,	'Other',	'',	'',	'',	'',	0,	7,	'1',	0,	'',	'',	'',	'0',	0,	0,	0,	'',	0),
 (245,	2,	0,	'Legal Issues',	'',	'',	'',	'legal_issues',	0,	7,	'1',	0,	'',	'',	'',	'0',	0,	0,	0,	'',	0);
 
-DROP TABLE IF EXISTS `y_sys_code_source`;
-CREATE TABLE `y_sys_code_source` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `keyword` varchar(255) NOT NULL DEFAULT '',
-  `source` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_conf`;
-CREATE TABLE `y_sys_conf` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `value` text NOT NULL,
-  `desc` text NOT NULL,
-  `active` enum('1','0') NOT NULL DEFAULT '1',
-  `linked_table` varchar(255) NOT NULL,
-  `linked_data` varchar(255) NOT NULL,
-  `linked_method` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_conf_items`;
-CREATE TABLE `y_sys_conf_items` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `desc` text NOT NULL,
-  `group_id` smallint(3) NOT NULL DEFAULT '0',
-  `group_name` varchar(255) NOT NULL DEFAULT '',
-  `type` varchar(255) NOT NULL DEFAULT '',
-  `keyword` text NOT NULL,
-  `value` text NOT NULL,
-  `default` text NOT NULL,
-  `extra` text NOT NULL,
-  `eval_php` text NOT NULL,
-  `position` smallint(3) NOT NULL DEFAULT '0',
-  `display` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `y_sys_core_servers`;
 CREATE TABLE `y_sys_core_servers` (
@@ -2355,20 +1826,6 @@ CREATE TABLE `y_sys_locale_translate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `y_sys_locale_user_tr`;
-CREATE TABLE `y_sys_locale_user_tr` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `site_id` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `var` varchar(255) NOT NULL DEFAULT '',
-  `translation` text NOT NULL,
-  `locale` varchar(12) NOT NULL DEFAULT '',
-  `last_update` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `locale_var_user_id` (`user_id`,`var`,`locale`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `y_sys_locale_vars`;
 CREATE TABLE `y_sys_locale_vars` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -2409,8 +1866,6 @@ CREATE TABLE `y_sys_log_admin_auth_fails` (
   PRIMARY KEY (`time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `y_sys_log_admin_auth_fails` (`time`, `ip`, `login`, `pswd`, `reason`, `site_id`, `server_id`) VALUES
-(1397139684.270,	'192.168.1.5',	'admin',	'88AcDBUoj7x9F8S',	'w',	1,	0);
 
 DROP TABLE IF EXISTS `y_sys_log_admin_exec`;
 CREATE TABLE `y_sys_log_admin_exec` (
@@ -2464,33 +1919,6 @@ CREATE TABLE `y_sys_log_auth_fails` (
   `site_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `server_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_log_core_errors`;
-CREATE TABLE `y_sys_log_core_errors` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `error_level` smallint(5) unsigned NOT NULL,
-  `error_text` text NOT NULL,
-  `source_file` varchar(255) NOT NULL,
-  `source_line` smallint(5) unsigned NOT NULL,
-  `env_data` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_group` tinyint(3) unsigned NOT NULL,
-  `is_admin` enum('0','1') NOT NULL DEFAULT '0',
-  `site_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `server_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `date` int(10) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(16) NOT NULL DEFAULT '',
-  `query_string` varchar(255) NOT NULL DEFAULT '',
-  `request_uri` varchar(255) NOT NULL DEFAULT '',
-  `user_agent` varchar(255) NOT NULL DEFAULT '',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `object` varchar(255) NOT NULL DEFAULT '',
-  `action` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `error_level` (`error_level`),
-  KEY `date` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2554,46 +1982,6 @@ CREATE TABLE `y_sys_log_exec` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `y_sys_log_img_resizes`;
-CREATE TABLE `y_sys_log_img_resizes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `source_path` varchar(255) NOT NULL,
-  `source_file_size` int(10) unsigned NOT NULL,
-  `source_x` int(10) unsigned NOT NULL,
-  `source_y` int(10) unsigned NOT NULL,
-  `result_path` varchar(255) NOT NULL,
-  `result_file_size` int(10) unsigned NOT NULL,
-  `result_x` int(10) unsigned NOT NULL,
-  `result_y` int(10) unsigned NOT NULL,
-  `limit_x` int(10) unsigned NOT NULL,
-  `limit_y` int(10) unsigned NOT NULL,
-  `other_options` varchar(255) NOT NULL DEFAULT '',
-  `source_file` varchar(255) NOT NULL DEFAULT '',
-  `source_line` smallint(5) unsigned NOT NULL,
-  `env_data` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_group` tinyint(3) unsigned NOT NULL,
-  `is_admin` enum('0','1') NOT NULL DEFAULT '0',
-  `site_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `server_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `date` int(10) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(16) NOT NULL DEFAULT '',
-  `query_string` varchar(255) NOT NULL DEFAULT '',
-  `request_uri` varchar(255) NOT NULL DEFAULT '',
-  `user_agent` varchar(255) NOT NULL DEFAULT '',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `object` varchar(255) NOT NULL DEFAULT '',
-  `action` varchar(255) NOT NULL DEFAULT '',
-  `success` enum('0','1') NOT NULL,
-  `error_text` text NOT NULL,
-  `process_time` float unsigned NOT NULL,
-  `used_lib` varchar(32) NOT NULL,
-  `tried_libs` varchar(32) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `date` (`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `y_sys_log_redirects`;
 CREATE TABLE `y_sys_log_redirects` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -2619,80 +2007,6 @@ CREATE TABLE `y_sys_log_redirects` (
   `redirect_type` varchar(16) NOT NULL DEFAULT '',
   `reason` varchar(1024) NOT NULL DEFAULT '',
   `trace` varchar(1024) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_log_ssh_action`;
-CREATE TABLE `y_sys_log_ssh_action` (
-  `microtime` decimal(13,3) unsigned NOT NULL DEFAULT '0.000',
-  `server_id` varchar(64) NOT NULL DEFAULT '',
-  `init_type` enum('user','admin') DEFAULT 'user',
-  `action` varchar(32) NOT NULL DEFAULT '',
-  `comment` varchar(255) NOT NULL DEFAULT '',
-  `get_object` varchar(32) NOT NULL DEFAULT '',
-  `get_action` varchar(32) NOT NULL DEFAULT '',
-  `user_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `user_group` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(32) NOT NULL DEFAULT '',
-  KEY `microtime` (`microtime`),
-  KEY `server_id` (`server_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_log_tags`;
-CREATE TABLE `y_sys_log_tags` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tag_id` int(10) unsigned NOT NULL,
-  `object_id` int(10) unsigned NOT NULL,
-  `object_name` varchar(64) NOT NULL DEFAULT '',
-  `owner_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `date` int(10) unsigned NOT NULL,
-  `text` varchar(128) NOT NULL DEFAULT '',
-  `site_id` int(10) unsigned NOT NULL,
-  `ip` varchar(16) NOT NULL DEFAULT '',
-  `user_agent` varchar(255) NOT NULL DEFAULT '',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `request_uri` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_log_user_errors`;
-CREATE TABLE `y_sys_log_user_errors` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `error_level` smallint(5) unsigned NOT NULL,
-  `error_text` text NOT NULL,
-  `source_file` varchar(255) NOT NULL,
-  `source_line` smallint(5) unsigned NOT NULL,
-  `env_data` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_group` tinyint(3) unsigned NOT NULL,
-  `is_admin` enum('0','1') NOT NULL DEFAULT '0',
-  `site_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `server_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `date` int(10) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(16) NOT NULL DEFAULT '',
-  `query_string` varchar(255) NOT NULL DEFAULT '',
-  `request_uri` varchar(255) NOT NULL DEFAULT '',
-  `user_agent` varchar(255) NOT NULL DEFAULT '',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `object` varchar(255) NOT NULL DEFAULT '',
-  `action` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `error_level` (`error_level`),
-  KEY `date` (`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_log_webshell_action`;
-CREATE TABLE `y_sys_log_webshell_action` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `microtime` decimal(13,3) unsigned NOT NULL DEFAULT '0.000',
-  `server_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `action` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2883,50 +2197,6 @@ CREATE TABLE `y_sys_sites` (
 
 INSERT INTO `y_sys_sites` (`id`, `name`, `web_path`, `real_path`, `active`, `vertical`, `locale`, `country`) VALUES
 (1,	'Current site name (__CHANGE_ME!__)',	'../',	'INCLUDE_PATH',	'1',	'homes',	'en',	'');
-
-DROP TABLE IF EXISTS `y_sys_skins`;
-CREATE TABLE `y_sys_skins` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '',
-  `desc` varchar(255) NOT NULL DEFAULT '',
-  `for_admin` enum('0','1') NOT NULL DEFAULT '0',
-  `for_user` enum('1','0') NOT NULL DEFAULT '1',
-  `active` enum('0','1') NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_smilies`;
-CREATE TABLE `y_sys_smilies` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(50) DEFAULT NULL,
-  `url` varchar(100) DEFAULT NULL,
-  `emoticon` varchar(75) DEFAULT NULL,
-  `emo_set` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `y_sys_task_manager`;
-CREATE TABLE `y_sys_task_manager` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `file` varchar(255) NOT NULL DEFAULT '',
-  `php_code` text NOT NULL,
-  `next_run` int(10) NOT NULL DEFAULT '0',
-  `week_day` tinyint(1) NOT NULL DEFAULT '-1',
-  `month_day` smallint(2) NOT NULL DEFAULT '-1',
-  `hour` smallint(2) NOT NULL DEFAULT '-1',
-  `minute` smallint(2) NOT NULL DEFAULT '-1',
-  `cronkey` varchar(32) NOT NULL DEFAULT '',
-  `log` tinyint(1) NOT NULL DEFAULT '0',
-  `description` text NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT '1',
-  `key` varchar(30) NOT NULL DEFAULT '',
-  `safemode` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `task_next_run` (`next_run`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `y_sys_templates`;
@@ -3267,8 +2537,5 @@ CREATE TABLE `y_user` (
   KEY `priority` (`priority`),
   KEY `country` (`country`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `y_user` (`id`, `group`, `name`, `nick`, `login`, `email`, `password`, `phone`, `city`, `state`, `country`, `zip_code`, `address`, `sex`, `age`, `birth_date`, `visits`, `active`, `add_date`, `last_update`, `last_login`, `num_logins`, `last_view`, `num_views`, `verify_code`, `profile_url`, `admin_comments`, `ip`, `photo_verified`, `avatar`, `priority`, `lon`, `lat`, `has_avatar`, `contact_by_email`, `emails`, `emailssent`, `go_after_login`) VALUES
-(1,	2,	'',	'test',	'test',	'test@test.ru',	'test',	'',	'',	'',	'',	'',	'',	'Male',	0,	'0000-00-00',	0,	1,	1206006530,	0,	0,	1,	0,	0,	'MXd2Y24xMjA2MDA2NTMw',	'',	'',	'192.168.1.7',	'0',	'',	0,	0.0000,	0.0000,	'0',	'1',	0,	0,	'');
 
 -- 2015-10-19 14:47:45
