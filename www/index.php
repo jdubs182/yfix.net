@@ -9,9 +9,9 @@ if (file_exists($saved_settings)) {
 }
 define('DEBUG_MODE', false);
 define('YF_PATH', '/home/www/yf/');
-define('WEB_PATH', '//yfix.net/');
+define('WEB_PATH', '//'.$_SERVER['HTTP_HOST'].'/');
 define('SITE_DEFAULT_PAGE', './?object=docs');
-define('SITE_ADVERT_NAME', 'Yfix.net');
+define('SITE_ADVERT_NAME', $_SERVER['HTTP_HOST']);
 require dirname(__DIR__).'/config/project_conf.php';
 $PROJECT_CONF['tpl']['REWRITE_MODE'] = true;
 require YF_PATH.'classes/yf_main.class.php';

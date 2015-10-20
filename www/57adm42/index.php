@@ -9,7 +9,7 @@ if (file_exists($saved_settings)) {
 }
 define('DEBUG_MODE', false);
 define('YF_PATH', '/home/www/yf/');
-define('WEB_PATH', '//yfix.net/');
+define('WEB_PATH', '//'.$_SERVER['HTTP_HOST'].'/');
 define('ADMIN_WEB_PATH', WEB_PATH. basename(dirname(__FILE__)).'/');
 //define('ADMIN_WEB_PATH', '//'.$_SERVER['HTTP_HOST'].'/'.basename(dirname(__FILE__)).'/');
 define('ADMIN_SITE_PATH', dirname(__FILE__).'/');

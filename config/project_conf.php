@@ -4,15 +4,15 @@ $CONF['css_framework'] = 'bs3';
 $CONF['DEF_BOOTSTRAP_THEME'] = 'slate';
 $CONF['DEF_BOOTSTRAP_THEME_ADMIN'] = 'slate';
 
-define('SITE_UPLOADS_DIR',	'uploads/');				// Root folder for all uploads
-define('SITE_AVATARS_DIR',	'uploads/avatars/');		// avatars folder
+define('SITE_UPLOADS_DIR',	'uploads/');
+define('SITE_AVATARS_DIR',	'uploads/avatars/');
 if (!defined('SITE_ADVERT_NAME')) {
-	define('SITE_ADVERT_NAME',	'Yfix.net demo');	// Advertisement name
+	define('SITE_ADVERT_NAME',	$_SERVER['HTTP_HOST']' demo and docs');
 }
-define('SITE_ADVERT_TITLE',	'Yfix.net demo');	// Advertisement title
-define('SITE_ADVERT_URL',	defined('WEB_PATH')?WEB_PATH:'');	// Advertisement URL
-define('SITE_ADMIN_NAME',	'Yfix');		// Site Admin name
-define('SITE_ADMIN_EMAIL',	'info@'.$_SERVER['HTTP_HOST']);	// Admin's email used in common cases
+define('SITE_ADVERT_TITLE',	$_SERVER['HTTP_HOST'].' demo and docs');
+define('SITE_ADVERT_URL',	defined('WEB_PATH') ? WEB_PATH : '');
+define('SITE_ADMIN_NAME',	'Yfix');
+define('SITE_ADMIN_EMAIL',	'info@'.$_SERVER['HTTP_HOST']);
 
 if (!function_exists('my_array_merge')) {
 	function my_array_merge($a1, $a2) {
