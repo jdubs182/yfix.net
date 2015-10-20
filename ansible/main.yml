@@ -3,24 +3,24 @@
   sudo: yes
 
   handlers:
-#    - include: handlers.yml
+    - include: handlers.yml
 
   pre_tasks:
-#    - include: pre-tasks.yml
+    - include: pre-tasks.yml
 
   roles:
-#    - yfix.mc
+    - yfix.mc
 #    - yfix.mysql
 
   tasks:
-#    - include: tasks-apt.yml
-#    - include: tasks-other.yml
-#    - include: tasks-nginx.yml
-#    - include: tasks-php-fpm.yml
+    - include: tasks-apt.yml
+    - include: tasks-other.yml
+    - include: tasks-nginx.yml
+    - include: tasks-php-fpm.yml
     - include: tasks-mysql.yml
-#    - include: tasks-memcached.yml
+    - include: tasks-memcached.yml
     - include: tasks-yf-framework.yml
     - include: handlers.yml
 
   post_tasks:
-#    - include: post-tasks.yml
+    - include: post-tasks.yml

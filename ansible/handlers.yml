@@ -3,6 +3,6 @@
     - name: restart php-fpm
       service: name=php5-fpm state=restarted
     - name: restart mysql
-      service: name=mysql state=restarted
+      service: name=mysql state=restarted sleep=5
     - name: restart memcached
       service: name=memcached state=restarted
