@@ -1,0 +1,7 @@
+<?php
+
+define('DEBUG_MODE', $_GET['debug'] == 'debug' ? 1 : 0);
+
+define('DB_NAME',   '__put_here_db_name__');
+define('DB_USER',   '__put_here_db_user__');
+define('DB_PSWD',   '__put_here_db_pswd__');
