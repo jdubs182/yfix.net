@@ -7,7 +7,7 @@ $CONF['DEF_BOOTSTRAP_THEME_ADMIN'] = 'slate';
 define('SITE_UPLOADS_DIR',	'uploads/');
 define('SITE_AVATARS_DIR',	'uploads/avatars/');
 if (!defined('SITE_ADVERT_NAME')) {
-	define('SITE_ADVERT_NAME',	$_SERVER['HTTP_HOST']' demo and docs');
+	define('SITE_ADVERT_NAME',	$_SERVER['HTTP_HOST'].' demo and docs');
 }
 define('SITE_ADVERT_TITLE',	$_SERVER['HTTP_HOST'].' demo and docs');
 define('SITE_ADVERT_URL',	defined('WEB_PATH') ? WEB_PATH : '');
