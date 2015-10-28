@@ -1,3 +1,6 @@
 ---
-    - name: Generate locales
-      command: "locale-gen ru_RU.UTF-8 ru_UA.UTF-8 uk_UA.UTF-8"
+    - locale_gen: name={{item}} state=present
+      with_items:
+        - ru_RU.UTF-8
+        - ru_UA.UTF-8
+        - uk_UA.UTF-8

@@ -16,6 +16,9 @@
         - php5-xcache
         - php5-xdebug
         - php5-xhprof
+        - php5-dev
+        - php-pear
+        - libyaml-dev
     - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/fpm/php.ini owner=root group=root mode=0644
       notify: restart php-fpm
     - template: src=templates/php-fpm/php.ini.j2 dest=/etc/php5/cli/php.ini owner=root group=root mode=0644
@@ -24,6 +27,13 @@
       notify: restart php-fpm
     - template: src=templates/php-fpm/pool.d/www.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf owner=root group=root mode=0644
       notify: restart php-fpm
+
+#    - command: pecl install yaml
+    - pear: name=pecl/yaml state=present
+    - template: src=templates/php-fpm/mods-available/yaml.ini.j2 dest=/etc/php5/mods-available/yaml.ini owner=root group=root mode=0644
+    - command: php5enmod yaml
+      notify: restart php-fpm
+
     - name: Ensure php-fpm is started and enabled to start at boot.
       service: name=php5-fpm state=started enabled=yes
       notify: restart php-fpm
