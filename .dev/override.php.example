@@ -5,3 +5,12 @@ define('DEBUG_MODE', $_GET['debug'] == 'debug' ? 1 : 0);
 define('DB_NAME',   '{{ mysql_db_name }}');
 define('DB_USER',   '{{ mysql_db_user }}');
 define('DB_PSWD',   '{{ mysql_db_pswd }}');
+
+$CONF['cache']['CACHE_NS'] = $_SERVER['HTTP_HOST'].'_';
+
+$CONF['DEF_BOOTSTRAP_THEME'] = 'slate';
+if ($_GET['css_framework']) {
+	$CONF['css_framework'] = $_GET['css_framework'];
+} elseif ($_GET['html5fw']) {
+	$CONF['css_framework'] = $_GET['html5fw'];
+}

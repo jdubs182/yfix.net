@@ -27,5 +27,6 @@ Vagrant.configure(2) do |config|
     ansible.host_key_checking = false
     ansible.playbook = "ansible/main.yml"
     ansible.extra_vars = vconf
+    ansible.verbose = 'vv'
   end
 end
