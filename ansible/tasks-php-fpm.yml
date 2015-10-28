@@ -29,7 +29,7 @@
       notify: restart php-fpm
 
     - name: Install PHP Yaml package from PECL
-      shell: "yes '' | pecl install yaml"
+      shell: "(php -m | grep yaml) || (yes '' | pecl install yaml)"
     - template: src=templates/php-fpm/mods-available/yaml.ini.j2 dest=/etc/php5/mods-available/yaml.ini owner=root group=root mode=0644
     - command: php5enmod yaml
       notify: restart php-fpm
