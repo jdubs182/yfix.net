@@ -6,6 +6,12 @@ define('DB_NAME',   '{{ mysql_db_name }}');
 define('DB_USER',   '{{ mysql_db_user }}');
 define('DB_PSWD',   '{{ mysql_db_pswd }}');
 
+if (false !== strpos($_SERVER['HTTP_HOST'], 'docker.dev')) {
+	define('DB_HOST',   'mysql');
+	$CONF['MEMCACHED_HOST'] = 'memcached';
+	define('YF_PATH', '/var/www/default/yf/');
+}
+
 $CONF['cache']['CACHE_NS'] = $_SERVER['HTTP_HOST'].'_';
 
 $CONF['DEF_BOOTSTRAP_THEME'] = 'slate';
