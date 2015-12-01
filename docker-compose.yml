@@ -1,0 +1,63 @@
+data:
+  image: tianon/true
+  volumes:
+    - ./:/var/www/default
+    - ./docker/var/log/supervisor:/var/log/supervisor
+
+nginx:
+  image: yfix/nginx
+  restart: always
+  ports:
+    - "20080:80"
+  links:
+    - php
+    - memcached
+  volumes_from:
+    - data
+  volumes:
+    - ./docker/etc/nginx:/etc/nginx
+    - ./docker/var/cache/nginx:/var/cache/nginx
+    - ./docker/var/log/nginx:/var/log/nginx
+
+php:
+  image: yfix/php
+  restart: always
+  links:
+    - mysql
+    - memcached
+  volumes_from:
+    - data
+  volumes:
+    - ./docker/var/log/php5:/var/log/php5
+    - ./docker/var/lib/php5/sessions:/var/lib/php5/sessions
+
+mysql:
+  image: yfix/mysql
+  restart: always
+  environment:
+    - MYSQL_DATABASE=yfix_net
+    - MYSQL_USER=yfix_net
+    - MYSQL_PASSWORD=123456
+    - MYSQL_ROOT_PASSWORD=123456
+  volumes_from:
+    - data
+  volumes:
+    - ./docker/var/lib/mysql:/var/lib/mysql
+
+ssh:
+  image: yfix/ssh
+  restart: always
+  privileged: true
+  ports:
+    - "20022:22"
+  links:
+    - nginx
+    - php
+    - mysql
+  volumes_from:
+    - data
+
+memcached:
+  image: memcached
+  restart: always
+  command: memcached -m 8
