@@ -3,7 +3,7 @@ server {
     server_name _;
     root /var/www/default/www;
     location / {
-        index  index.html index.htm;
+        index index.html index.htm index.php;
     }
     location ~ \.php$ {
         include fastcgi.conf;

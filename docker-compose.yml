@@ -29,6 +29,7 @@ php:
     - data
   volumes:
     - ./docker/var/log/php5:/var/log/php5
+    - ./docker/etc/php5/fpm/pool.d/www.conf:/etc/php5/fpm/pool.d/www.conf
     - ./docker/var/lib/php5/sessions:/var/lib/php5/sessions
 
 mysql:
