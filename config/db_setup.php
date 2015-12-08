@@ -1,5 +1,5 @@
 <?php
-define('DB_TYPE',	'mysql5');
+define('DB_TYPE',	'mysqli');
 define('DB_HOST',	'localhost');
 define('DB_NAME',	'_PUT_NAME_HERE_');
 define('DB_USER',	'_PUT_USER_HERE_');
