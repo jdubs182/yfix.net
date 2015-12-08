@@ -8,7 +8,7 @@ nginx:
   image: yfix/nginx
   restart: always
   ports:
-    - "20080:80"
+    - "20081:80"
   links:
     - php
     - memcached
@@ -20,7 +20,7 @@ nginx:
     - ./docker/var/log/nginx:/var/log/nginx
 
 php:
-  image: yfix/php
+  image: yfix/php:from-src-7
   restart: always
   links:
     - mysql
@@ -28,9 +28,14 @@ php:
   volumes_from:
     - data
   volumes:
-    - ./docker/var/log/php5:/var/log/php5
-    - ./docker/etc/php5/fpm/pool.d/www.conf:/etc/php5/fpm/pool.d/www.conf
-    - ./docker/var/lib/php5/sessions:/var/lib/php5/sessions
+    - /home/www/yf/:/var/www/default/yf
+    - ./docker/etc/php/cli/php.ini:/etc/php/cli/php.ini
+    - ./docker/etc/php/fpm/php.ini:/etc/php/fpm/php.ini
+    - ./docker/etc/php/fpm/php-fpm.conf:/etc/php/fpm/php-fpm.conf
+    - ./docker/etc/php/fpm/pool.d/www.conf:/etc/php/fpm/pool.d/www.conf
+    - ./docker/var/log/php:/var/log/php
+    - ./docker/var/lib/php/sessions:/var/lib/php/sessions
+    - ./docker/etc/supervisor/conf.d/php-fpm.conf:/etc/supervisor/conf.d/php-fpm.conf
 
 mysql:
   image: yfix/mysql
@@ -44,18 +49,6 @@ mysql:
     - data
   volumes:
     - ./docker/var/lib/mysql:/var/lib/mysql
-
-#ssh:
-#  image: yfix/ssh
-#  restart: always
-#  privileged: true
-#  ports:
-#    - "20022:22"
-#  volumes_from:
-#    - data
-#  volumes:
-#    - ./container-files/config/authorized_keys:/config/authorized_keys:ro
-#    - ./container-files/etc/supervisor/conf.d/sshd.conf:/etc/supervisor/conf.d/sshd.conf
 
 memcached:
   image: memcached
