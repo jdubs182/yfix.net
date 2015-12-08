@@ -45,17 +45,17 @@ mysql:
   volumes:
     - ./docker/var/lib/mysql:/var/lib/mysql
 
-ssh:
-  image: yfix/ssh
-  restart: always
-  privileged: true
-  ports:
-    - "20022:22"
-  volumes_from:
-    - data
-  volumes:
-    - ./container-files/config/authorized_keys:/config/authorized_keys:ro
-    - ./container-files/etc/supervisor/conf.d/sshd.conf:/etc/supervisor/conf.d/sshd.conf
+#ssh:
+#  image: yfix/ssh
+#  restart: always
+#  privileged: true
+#  ports:
+#    - "20022:22"
+#  volumes_from:
+#    - data
+#  volumes:
+#    - ./container-files/config/authorized_keys:/config/authorized_keys:ro
+#    - ./container-files/etc/supervisor/conf.d/sshd.conf:/etc/supervisor/conf.d/sshd.conf
 
 memcached:
   image: memcached
