@@ -28,6 +28,7 @@ php:
   volumes_from:
     - data
   volumes:
+    - /home/www/yf/:/var/www/default/yf
     - ./docker/etc/hhvm/php.ini:/etc/hhvm/php.ini
     - ./docker/etc/hhvm/server.ini:/etc/hhvm/server.ini
     - ./docker/var/log/hhvm:/var/log/hhvm
