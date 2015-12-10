@@ -8,7 +8,7 @@ nginx:
   image: yfix/nginx
   restart: always
   ports:
-    - "20080:80"
+    - "20083:80"
   links:
     - php
     - memcached
@@ -20,7 +20,7 @@ nginx:
     - ./docker/var/log/nginx:/var/log/nginx
 
 php:
-  image: yfix/php
+  image: yfix/hhvm
   restart: always
   links:
     - mysql
@@ -28,9 +28,10 @@ php:
   volumes_from:
     - data
   volumes:
-    - ./docker/var/log/php5:/var/log/php5
-    - ./docker/etc/php5/fpm/pool.d/www.conf:/etc/php5/fpm/pool.d/www.conf
-    - ./docker/var/lib/php5/sessions:/var/lib/php5/sessions
+    - ./docker/etc/hhvm/php.ini:/etc/hhvm/php.ini
+    - ./docker/etc/hhvm/server.ini:/etc/hhvm/server.ini
+    - ./docker/var/log/hhvm:/var/log/hhvm
+    - ./docker/var/lib/hhvm/sessions:/var/lib/hhvm/sessions
 
 mysql:
   image: yfix/mysql
@@ -44,18 +45,6 @@ mysql:
     - data
   volumes:
     - ./docker/var/lib/mysql:/var/lib/mysql
-
-#ssh:
-#  image: yfix/ssh
-#  restart: always
-#  privileged: true
-#  ports:
-#    - "20022:22"
-#  volumes_from:
-#    - data
-#  volumes:
-#    - ./container-files/config/authorized_keys:/config/authorized_keys:ro
-#    - ./container-files/etc/supervisor/conf.d/sshd.conf:/etc/supervisor/conf.d/sshd.conf
 
 memcached:
   image: memcached
