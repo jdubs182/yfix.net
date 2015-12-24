@@ -20,7 +20,7 @@ nginx:
     - ./docker/var/log/nginx:/var/log/nginx
 
 php:
-  image: yfix/php:from-src-7
+  image: yfix/php:7
   restart: always
   links:
     - mysql
