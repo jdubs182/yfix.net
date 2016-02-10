@@ -20,11 +20,12 @@ nginx:
     - ./docker/var/log/nginx:/var/log/nginx
 
 php:
-  image: yfix/php:from-src-7
+  image: yfix/php:7
   restart: always
   links:
     - mysql
     - memcached
+    - redis
   volumes_from:
     - data
   volumes:
@@ -54,3 +55,10 @@ memcached:
   image: memcached
   restart: always
   command: memcached -m 8
+
+redis:
+  image: redis
+  restart: always
+  volumes:
+    - ./docker/redis-data:/data
+#    - ./docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
