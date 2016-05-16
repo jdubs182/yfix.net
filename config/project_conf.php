@@ -3,6 +3,8 @@
 $CONF['css_framework'] = 'bs3';
 $CONF['DEF_BOOTSTRAP_THEME'] = 'slate';
 $CONF['DEF_BOOTSTRAP_THEME_ADMIN'] = 'slate';
+$CONF['bs_theme_allow_override_for_user'] = true;
+$CONF['bs_theme_allow_override_for_admin'] = true;
 
 define('SITE_UPLOADS_DIR',	'uploads/');
 define('SITE_AVATARS_DIR',	'uploads/avatars/');
