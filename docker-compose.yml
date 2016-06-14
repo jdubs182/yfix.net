@@ -1,69 +1,82 @@
-data:
-  image: tianon/true
-  volumes:
-    - ./:/var/www/default
-    - ./docker/var/log/supervisor:/var/log/supervisor
+version: "2"
+services:
+  data:
+    image: tianon/true
+    volumes:
+      - ./:/var/www/default
+      - ./docker/var/log/supervisor:/var/log/supervisor
 
-nginx:
-  image: yfix/nginx
-  restart: always
-  ports:
-    - "20081:80"
-  links:
-    - php
-    - memcached
-  volumes_from:
-    - data
-  volumes:
-    - ./docker/etc/nginx:/etc/nginx
-    - ./docker/var/cache/nginx:/var/cache/nginx
-    - ./docker/var/log/nginx:/var/log/nginx
+  nginx:
+    image: yfix/nginx
+    restart: always
+    ports:
+      - "81:80"
+    links:
+      - php
+      - memcached
+      - redis
+    depends_on:
+      - php
+      - redis
+    volumes_from:
+      - data
+    volumes:
+      - ./docker/etc/nginx:/etc/nginx
+      - ./docker/var/cache/nginx:/var/cache/nginx
+      - ./docker/var/log/nginx:/var/log/nginx
 
-php:
-  image: yfix/php:7
-  restart: always
-  links:
-    - mysql
-    - memcached
-    - redis
-  volumes_from:
-    - data
-  volumes:
-    - /home/www/yf/:/var/www/default/yf
-    - ./docker/etc/php/cli/php.ini:/etc/php/cli/php.ini
-    - ./docker/etc/php/fpm/php.ini:/etc/php/fpm/php.ini
-    - ./docker/etc/php/fpm/php-fpm.conf:/etc/php/fpm/php-fpm.conf
-    - ./docker/etc/php/fpm/pool.d/www.conf:/etc/php/fpm/pool.d/www.conf
-    - ./docker/var/log/php:/var/log/php
-    - ./docker/var/lib/php/sessions:/var/lib/php/sessions
-    - ./docker/etc/supervisor/conf.d/:/etc/supervisor/conf.d/
-    - ./docker/etc/cron.d/:/etc/cron.d/
-    - ./docker/etc/cron.hourly/:/etc/cron.hourly/
-    - ./docker/etc/cron.daily/:/etc/cron.daily/
-    - ./docker/etc/cron.weekly/:/etc/cron.weekly/
-    - ./docker/etc/cron.monthly/:/etc/cron.monthly/
+  php:
+    image: yfix/php
+    restart: always
+    links:
+      - mysql
+      - memcached
+      - redis
+    depends_on:
+      - data
+      - mysql
+      - redis
+      - memcached
+    volumes_from:
+      - data
+    volumes:
+      - /home/www/yf/:/var/www/default/yf
+      - ./docker/etc/php/cli/php.ini:/etc/php/cli/php.ini
+      - ./docker/etc/php/fpm/php.ini:/etc/php/fpm/php.ini
+      - ./docker/etc/php/fpm/php-fpm.conf:/etc/php/fpm/php-fpm.conf
+      - ./docker/etc/php/fpm/pool.d/www.conf:/etc/php/fpm/pool.d/www.conf
+      - ./docker/var/log/php:/var/log/php
+      - ./docker/var/lib/php/sessions:/var/lib/php/sessions
+      - ./docker/etc/supervisor/conf.d/:/etc/supervisor/conf.d/
+      - ./docker/etc/cron.d/:/etc/cron.d/
+      - ./docker/etc/cron.hourly/:/etc/cron.hourly/
+      - ./docker/etc/cron.daily/:/etc/cron.daily/
+      - ./docker/etc/cron.weekly/:/etc/cron.weekly/
+      - ./docker/etc/cron.monthly/:/etc/cron.monthly/
 
-mysql:
-  image: yfix/mysql
-  restart: always
-  environment:
-    - MYSQL_DATABASE=yfix_net
-    - MYSQL_USER=yfix_net
-    - MYSQL_PASSWORD=123456
-    - MYSQL_ROOT_PASSWORD=123456
-  volumes_from:
-    - data
-  volumes:
-    - ./docker/var/lib/mysql:/var/lib/mysql
+  mysql:
+    image: yfix/mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=yfix_net
+      - MYSQL_USER=yfix_net
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456
+    depends_on:
+      - data
+    volumes_from:
+      - data
+    volumes:
+      - ./docker/var/lib/mysql:/var/lib/mysql
 
-memcached:
-  image: memcached
-  restart: always
-  command: memcached -m 8
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - ./docker/redis-data:/data
+#      - ./docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
-redis:
-  image: redis
-  restart: always
-  volumes:
-    - ./docker/redis-data:/data
-#    - ./docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  memcached:
+    image: memcached
+    restart: always
+    command: memcached -m 8
