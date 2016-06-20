@@ -80,3 +80,10 @@ services:
     image: memcached
     restart: always
     command: memcached -m 8
+
+  logrotate:
+    image: yfix/logrotate
+    restart: always
+    volumes:
+      - ./docker/etc/logrotate.d/:/etc/logrotate.d/
+      - ./docker/var/log/:/var/log/
