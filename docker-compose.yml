@@ -86,4 +86,5 @@ services:
     restart: always
     volumes:
       - ./docker/etc/logrotate.d/:/etc/logrotate.d/
+      - ./docker/etc/logrotate_cron.d/:/etc/cron.d/
       - ./docker/var/log/:/var/log/
