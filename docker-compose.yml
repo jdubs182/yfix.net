@@ -67,6 +67,8 @@ services:
     volumes_from:
       - data
     volumes:
+      - ./docker/var/log/mysql:/var/log/mysql
+      - ./docker/etc/mysql/conf.d/override.cnf:/etc/mysql/conf.d/override.cnf
       - ./docker/var/lib/mysql:/var/lib/mysql
 
   redis:
