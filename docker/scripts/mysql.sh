@@ -1,1 +1,1 @@
-docker exec -it $(docker-compose ps -q mysql) bash -c 'exec mysql -uroot --password=$MYSQL_ROOT_PASSWORD'
+docker-compose exec mysql bash -c 'exec mysql -uroot --password=$MYSQL_ROOT_PASSWORD'

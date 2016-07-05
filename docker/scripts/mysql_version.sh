@@ -1,1 +1,1 @@
-docker exec -it $(docker-compose ps -q mysql) mysqld --version
+docker-compose exec mysql mysqld --version

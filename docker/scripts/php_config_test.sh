@@ -1,1 +1,1 @@
-docker exec -it $(docker-compose ps -q php) php-fpm -t
+docker-compose exec php php-fpm -t

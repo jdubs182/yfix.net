@@ -1,1 +1,1 @@
-docker exec -it $(docker-compose ps -q nginx) nginx -t
+docker-compose exec nginx nginx -t
