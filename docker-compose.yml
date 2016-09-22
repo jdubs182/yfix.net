@@ -5,6 +5,7 @@ services:
     volumes:
       - ./:/var/www/default
       - ./docker/var/log/supervisor:/var/log/supervisor
+      - /home/www/yf/:/var/www/default/yf
 
   nginx:
     image: yfix/nginx
@@ -40,7 +41,6 @@ services:
     volumes_from:
       - data
     volumes:
-      - /home/www/yf/:/var/www/default/yf
       - ./docker/etc/php/cli/php.ini:/etc/php/cli/php.ini
       - ./docker/etc/php/fpm/php.ini:/etc/php/fpm/php.ini
       - ./docker/etc/php/fpm/php-fpm.conf:/etc/php/fpm/php-fpm.conf
@@ -72,14 +72,14 @@ services:
       - ./docker/var/lib/mysql:/var/lib/mysql
 
   redis:
-    image: redis
+    image: yfix/redis
     restart: always
     volumes:
       - ./docker/redis-data:/data
 #      - ./docker/etc/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
   memcached:
-    image: memcached
+    image: yfix/memcached
     restart: always
     command: memcached -m 8
 
