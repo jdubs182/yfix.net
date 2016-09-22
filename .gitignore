@@ -32,3 +32,5 @@ www/stats/
 
 .vagrant
 config.yml
+
+docker-compose.override.yml
