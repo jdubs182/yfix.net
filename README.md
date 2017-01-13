@@ -1,4 +1,35 @@
-### 1. Install using vagrant
+
+### 1. Install using docker-compose
+
+https://docs.docker.com/compose/
+
+```sh
+# Сreate some new local dir, for example: /opt/yfix-demo 
+mkdir -p /opt/yfix-demo
+# Clone this repository into that dir 
+git clone --recursive --depth 1 https://github.com/yfix/yfix.net /opt/yfix-demo
+cd /opt/yfix-demo
+# copy .dev/override.php.example into .dev/override.php and edit with choosed db connection params
+# edit docker-compose.yml with choosed db connection params
+# Setup docker engine
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' > /etc/apt/sources.list.d/docker.list
+sudo apt-get update && sudo apt-get install -y docker-engine
+# Setup docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+# bash completiom
+curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose --version | awk 'NR==1{print $NF}')/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+# Run all this: 
+docker-compose up -d && docker-compose logs
+```
+
+If everything was done right - you should see working docs/demo website at the url 
+(use 8081 or any other port that was chosen inside docker-compose.yml)
+http://localhost:8081/
+
+### 2. Install using vagrant
 
 https://www.vagrantup.com/
 
@@ -37,33 +68,3 @@ ansible-galaxy install -ir ansible/requirements.txt or ansible-galaxy install -i
 If everything was done right - you should see working docs/demo website at the url 
 (or whatever else you set inside .dev/config.yml): 
 http://yfix-test.dev/
-
-### 2. Install using docker-compose
-
-https://docs.docker.com/compose/
-
-```sh
-# Сreate some new local dir, for example: /opt/yfix-demo 
-mkdir -p /opt/yfix-demo
-# Clone this repository into that dir 
-git clone --recursive --depth 1 https://github.com/yfix/yfix.net /opt/yfix-demo
-cd /opt/yfix-demo
-# copy .dev/override.php.example into .dev/override.php and edit with choosed db connection params
-# edit docker-compose.yml with choosed db connection params
-# Setup docker engine
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' > /etc/apt/sources.list.d/docker.list
-sudo apt-get update && sudo apt-get install -y docker-engine
-# Setup docker-compose
-curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-# bash completiom
-curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose --version | awk 'NR==1{print $NF}')/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
-# Run all this: 
-docker-compose up -d && docker-compose logs
-```
-
-If everything was done right - you should see working docs/demo website at the url 
-(use 8081 or any other port that was chosen inside docker-compose.yml)
-http://localhost:8081/
